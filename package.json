@@ -1,0 +1,45 @@
+{
+  "name": "mobinge",
+  "version": "0.0.1",
+  "engines": "v6.12.0",
+  "author": "Sam Jones",
+  "description": "Client-heavy webcomic site display system",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samguyjones/mobinge.git"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babelify": "^8.0.0",
+    "concat": "^1.0.3",
+    "webpack": "^3.8.1"
+  },
+  "scripts": {
+    "build": "yarn run build-src && yarn run build-dist && yarn run build-lib",
+    "build-src": "babel src --out-dir dist",
+    "build-dist": "webpack --config webpack.config.js",
+    "build-lib": "cp dist/bundle.js lib"
+  },
+  "dependencies": {
+    "fetch": "^1.1.0",
+    "lodash": "^4.17.4",
+    "react": "^16.1.1",
+    "react-dom": "^16.1.1",
+    "react-draggable": "^3.0.4",
+    "react-responsive": "^4.0.3"
+  },
+  "bugs": {
+    "url": "https://github.com/samguyjones/mobinge/issues"
+  },
+  "homepage": "https://github.com/samguyjones/mobinge#readme",
+  "main": "strip.js",
+  "keywords": [
+    "webcomic",
+    "react",
+    "mobile",
+    "responsive"
+  ]
+}
