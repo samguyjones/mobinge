@@ -2,7 +2,7 @@ import React from 'react';
 import PanelSet from './panelset';
 import MediaQuery from 'react-responsive';
 
-export default class Mobinge extends React.Component {
+class Mobinge extends React.Component {
   constructor(props) {
     const ratio=.75;
     const width = parseInt(props.width);
@@ -58,3 +58,5 @@ export default class Mobinge extends React.Component {
     </div>;
   }
 }
+
+export default Mobinge;

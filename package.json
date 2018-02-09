@@ -1,6 +1,6 @@
 {
   "name": "mobinge",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "engines": "v6.12.0",
   "author": "Sam Jones",
   "description": "Client-heavy webcomic site display system",
