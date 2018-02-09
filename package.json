@@ -1,6 +1,6 @@
 {
   "name": "mobinge",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": "v6.12.0",
   "author": "Sam Jones",
   "description": "Client-heavy webcomic site display system",
@@ -21,7 +21,7 @@
     "build": "yarn run build-src && yarn run build-dist && yarn run build-lib",
     "build-src": "babel src --out-dir dist",
     "build-dist": "webpack --config webpack.config.js",
-    "build-lib": "cp dist/bundle.js lib"
+    "build-lib": "cp dist/bundle.js index.js"
   },
   "dependencies": {
     "fetch": "^1.1.0",
@@ -35,7 +35,7 @@
     "url": "https://github.com/samguyjones/mobinge/issues"
   },
   "homepage": "https://github.com/samguyjones/mobinge#readme",
-  "main": "strip.js",
+  "main": "index.js",
   "keywords": [
     "webcomic",
     "react",
