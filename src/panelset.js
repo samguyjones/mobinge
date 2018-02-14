@@ -1,6 +1,5 @@
 import React from 'react';
 import PanelLibrarian from './panellibrarian';
-import Draggable from 'react-draggable';
 import PanelMover from './panelmover.js';
 import SnapDraggable from './snapdraggable.js';
 import Arrows from './arrows.js';

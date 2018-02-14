@@ -21,21 +21,23 @@
     "build": "yarn run build-src && yarn run build-dist && yarn run build-lib",
     "build-src": "babel src --out-dir dist",
     "build-dist": "webpack --config webpack.config.js",
-    "build-lib": "cp dist/bundle.js index.js"
+    "build-lib": "cp dist/bundle.js lib"
   },
   "dependencies": {
     "fetch": "^1.1.0",
     "lodash": "^4.17.4",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
-    "react-draggable": "^3.0.4",
-    "react-responsive": "^4.0.3"
+    "react-draggable": "^3.0.5",
+    "react-responsive": "^4.0.3",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2"
   },
   "bugs": {
     "url": "https://github.com/samguyjones/mobinge/issues"
   },
   "homepage": "https://github.com/samguyjones/mobinge#readme",
-  "main": "index.js",
+  "main": "dist/bundle.js",
   "keywords": [
     "webcomic",
     "react",
