@@ -45,12 +45,20 @@ export default class PanelSet extends React.Component
     }
   }
 
+  endFunction(toStart) {
+    let destination = (toStart) ? 0 : -((this.state.panels.length-1) * this.state.width);
+    return () => {
+      this.mover.snapTo(destination);
+    }
+  }
+
   getArrows() {
     if (!this.props.arrowWidth) {
       return null;
     }
     return <Arrows width={this.props.arrowWidth * this.state.width}
-        onNext={this.moveFunction(1)} onBack={this.moveFunction(-1)}/>;
+        onNext={this.moveFunction(1)} onBack={this.moveFunction(-1)}
+        onFirst={this.endFunction(true)} onLast={this.endFunction(false)}/>;
   }
 
   render() {

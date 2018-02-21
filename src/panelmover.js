@@ -35,6 +35,11 @@ export default class PanelMover {
       direction));
   }
 
+  snapTo(destX)
+  {
+    this.dragComponent.snapTo(destX);
+  }
+
   snapDistance(distance) {
     if (distance % this.chunkWidth) {
       throw "Distance isn't divisible by the item width ${this.chunkWidth}.";
