@@ -46,7 +46,7 @@ export default class PanelSet extends React.Component
   }
 
   endFunction(toStart) {
-    let destination = (toStart) ? 0 : -((this.state.panels.length-1) * this.state.width);
+    let destination = (toStart) ? 0 : -((this.state.panels.length-this.props.arrowWidth) * this.state.width);
     return () => {
       this.mover.snapTo(destination);
     }
