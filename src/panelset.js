@@ -39,9 +39,8 @@ export default class PanelSet extends React.Component
   }
 
   moveFunction(goDirection) {
-    const distance = this.props.arrowWidth * this.state.width;
     return () => {
-      this.mover.snapDistance(distance * goDirection);
+      this.mover.snapPanels(this.props.arrowWidth * goDirection);
     }
   }
 

@@ -2,11 +2,11 @@ import Draggable from 'react-draggable';
 
 export default class SnapDraggable extends Draggable
 {
-
   constructor(props) {
     super(props);
     this.state.x = -props.startX;
     this.timeout = false;
+    this.moveInterval = 5;
     props.mover.draggable(this);
   }
 
@@ -22,7 +22,6 @@ export default class SnapDraggable extends Draggable
     if (isNaN(newX)) {
       throw 'Destination not a number.';
     }
-    const moveInterval = 10;
     if ((this.state.x == newX) && (this.state.y == newY)) {
       this.timeout = false;
       return;
@@ -33,7 +32,7 @@ export default class SnapDraggable extends Draggable
     };
     this.setState(newPosition);
     if (ongoing || !this.timeout) {
-      this.timeout = setTimeout(() => this.snapTo(newX, newY, true), moveInterval);
+      this.timeout = setTimeout(() => this.snapTo(newX, newY, true), this.moveInterval);
     }
   }
 

@@ -2,7 +2,7 @@ export default class PanelMover {
 
   constructor(width) {
     this.landfall = false;
-    this.boundary = 30;
+    this.boundary = 10;
     this.dragComponent = null;
     this.chunkWidth = width;
   }
@@ -40,11 +40,8 @@ export default class PanelMover {
     this.dragComponent.snapTo(destX);
   }
 
-  snapDistance(distance) {
-    if (distance % this.chunkWidth) {
-      throw "Distance isn't divisible by the item width ${this.chunkWidth}.";
-    }
-    this.dragComponent.snapDistance(distance);
+  snapPanels(distance) {
+    this.dragComponent.snapDistance(distance * this.chunkWidth);
   }
 
   toDirection(lastPosition) {
