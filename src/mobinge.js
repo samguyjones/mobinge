@@ -6,7 +6,7 @@ export default class Mobinge extends React.Component {
   constructor(props) {
     const ratio=.75;
     const width = parseInt(props.width);
-    const startPanel = parseInt(props.startPanel);
+    const startPanel = parseInt(props.startPanel) || 1;
     super(props);
     this.state = {
       width: width,

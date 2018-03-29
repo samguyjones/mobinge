@@ -1,10 +1,11 @@
 export default class PanelMover {
 
-  constructor(width) {
+  constructor(width, moveResponse) {
     this.landfall = false;
     this.boundary = 10;
     this.dragComponent = null;
     this.chunkWidth = width;
+    this.moveResponse = moveResponse;
   }
 
   draggable(myDraggable) {
@@ -31,8 +32,10 @@ export default class PanelMover {
     if (isNaN(dragX)) console.log('state', this.dragComponent.state);
     const chunkOffset = dragX % this.chunkWidth;
     const direction = this.toBoundary(Math.abs(chunkOffset)) || this.toDirection(mouseX);
-    this.dragComponent.snapTo(this.getSnapDestination(dragX, chunkOffset,
-      direction));
+    const destination = this.getSnapDestination(dragX, chunkOffset,
+      direction);
+    this.moveResponse(destination);
+    this.dragComponent.snapTo(destination);
   }
 
   snapTo(destX)
@@ -64,21 +67,4 @@ export default class PanelMover {
     }
     return xPosition - (this.chunkWidth + offset);
   }
-  //
-  // xFromEvent(e) {
-  //   let event = e;
-  //   if (e.nativeEvent !== undefined) {
-  //     event = event.nativeEvent;
-  //   }
-  //   if ((e.touches !== undefined) && (e.touches.length)) {
-  //     event = event.touches[0];
-  //   }
-  //   if ((e.changedTouches !== undefined) && (e.changedTouches.length)) {
-  //     e = e.changedTouches[0];
-  //   }
-  //   if (e.screenX) {
-  //     return e.screenX;
-  //   }
-  //   return undefined;
-  // }
 }
