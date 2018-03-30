@@ -72,8 +72,8 @@ export default class PanelSet extends React.Component
   }
 
   loadPanels() {
-    const backBuffer = 1 * this.props.arrowWidth;
-    const frontBuffer = 4 * this.props.arrowWidth;
+    const backBuffer = 4;
+    const frontBuffer = 8;
     const fromPanel = Math.max(0, this.currentPanel - backBuffer);
     const toPanel = Math.min(this.state.panels.length - 1, this.currentPanel + frontBuffer);
     for (let count = fromPanel; count <= toPanel; count++) {
