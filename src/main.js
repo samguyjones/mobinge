@@ -9,7 +9,7 @@ import {
 
 
 const Reader = ({match}) => {
-  const panelNo = (match.params.panelNo) ? match.params.panelNo : 1;
+  const panelNo = (match.params.panelNo) ? match.params.panelNo : 0;
   return <div>
       <Mobinge width="320" maxPanel="4" arrowThreshold="2" startPanel={panelNo}
       manifest="manifest.json"/>

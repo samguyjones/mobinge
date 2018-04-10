@@ -51,13 +51,8 @@ export default class PanelLibrarian {
     });
   }
 
-  fetchPanels(resolution) {
-    resolution = (resolution == undefined) ? PANLIB_DEFAULT_RESOLUTION : resolution;
-    if (this.panels !== null) {
-      return new Promise(() => {
-        return this.pickPanels(resolution);
-      });
-    }
+  fetchManifestJson()
+  {
     if (!this.getPanelData) {
       throw {
         'message': 'No manifest is set.'
@@ -65,7 +60,22 @@ export default class PanelLibrarian {
     }
     return this.getPanelData.then((response) => {
       return response.json();
-    })
+    });
+  }
+
+  getCurrentEntry()
+  {
+    return this.panelData.currentEntry;
+  }
+
+  fetchPanels(resolution) {
+    resolution = (resolution == undefined) ? PANLIB_DEFAULT_RESOLUTION : resolution;
+    if (this.panels !== null) {
+      return new Promise(() => {
+        return this.pickPanels(resolution);
+      });
+    }
+    return this.fetchManifestJson()
     .then(panelData => {
       this.panelData = panelData;
       return this.pickPanels(resolution);

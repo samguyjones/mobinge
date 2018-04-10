@@ -29,6 +29,9 @@ export default class PanelSet extends React.Component
     this.librarian.fetchPanels(this.state.width + 'px')
         .then(panelUrls => {
           var cushion = 0;
+          if (this.currentPanel === 0) {
+            this.goToPanel(this.librarian.getCurrentEntry() - 1);
+          }
           this.setState({
             panels: panelUrls.map(panel => {
               const key = 'panel-' + panel.sequence;
@@ -41,20 +44,24 @@ export default class PanelSet extends React.Component
   }
 
   moveFunction(goDirection) {
-    const panelDrift = this.props.arrowWidth * goDirection
+    const panelDrift = this.props.arrowWidth * goDirection;
+    const newPanel = this.currentPanel + panelDrift;
     return () => {
-      this.mover.snapPanels(panelDrift);
-      this.loadFromPanel(this.currentPanel + panelDrift);
+      this.goToPanel(this.currentPanel + panelDrift);
     }
   }
 
   endFunction(toStart) {
     const destination = (toStart) ? 0 : (this.state.panels.length-this.props.arrowWidth);
-    let destinationLeft = destination * -this.state.width;
     return () => {
-      this.mover.snapTo(destinationLeft);
-      this.loadFromPanel(destination);
+      this.goToPanel(destination);
     }
+  }
+
+  goToPanel(panelNumber) {
+    let destinationLeft = panelNumber * -this.state.width;
+    this.mover.snapTo(destinationLeft)
+    this.loadFromPanel(panelNumber);
   }
 
   loadFromPanel(panelNumber) {
