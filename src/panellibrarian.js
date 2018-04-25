@@ -33,7 +33,7 @@ export default class PanelLibrarian {
       return this.manifest;
     }
     this.manifest = manifest;
-    this.getPanelData = fetch(manifest);
+    this.getPanelData = fetch(manifest, {cache: "no-store"});
     return this;
   }
 
