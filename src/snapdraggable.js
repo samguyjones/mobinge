@@ -36,6 +36,13 @@ export default class SnapDraggable extends Draggable
     }
   }
 
+  clearMovement()
+  {
+    if (this.timeout) {
+      clearTimeout(this.timeOut);      
+    }
+  }
+
   getLimit(newX) {
     newX = Math.min(newX,this.props.bounds.right);
     newX = Math.max(newX, this.props.bounds.left);

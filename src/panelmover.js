@@ -43,6 +43,12 @@ export default class PanelMover {
     this.dragComponent.snapTo(destX);
   }
 
+  sudoSnapTo(destX)
+  {
+    this.dragComponent.clearMovement();
+    this.dragComponent.snapTo(destX);
+  }
+
   snapPanels(distance) {
     this.dragComponent.snapDistance(distance * this.chunkWidth);
   }

@@ -63,7 +63,7 @@ export default class PanelSet extends React.Component
     panelNumber = Math.max(panelNumber,0);
     panelNumber = Math.min(panelNumber, this.state.panels.length - 1);
     let destinationLeft = panelNumber * -this.state.width;
-    this.mover.snapTo(destinationLeft)
+    this.mover.sudoSnapTo(destinationLeft, true);
     this.loadFromPanel(panelNumber);
   }
 
