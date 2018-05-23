@@ -11,11 +11,16 @@
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-jest": "^22.4.4",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "babel-watch": "^2.0.7",
     "babelify": "^8.0.0",
     "concat": "^1.0.3",
+    "jest": "^22.4.4",
+    "react-test-renderer": "^16.3.2",
+    "regenerator-runtime": "^0.11.1",
     "webpack": "^3.8.1",
     "zero-fill": "^2.2.3"
   },
@@ -25,7 +30,12 @@
     "build-dist": "webpack --config webpack.config.js",
     "build-tool": "babel tools-src --out-dir tools",
     "build-lib": "cp dist/bundle.js lib",
-    "watch-tool": "babel-watch tools-src/manifester.js"
+    "watch-tool": "babel-watch tools-src/manifester.js",
+    "test": "jest"
+  },
+  "jest": {
+    "verbose": true,
+    "testRegex": "(/tests/.*|\\.(test|spec))\\.jsx?$"
   },
   "dependencies": {
     "command-line-args": "^5.0.2",

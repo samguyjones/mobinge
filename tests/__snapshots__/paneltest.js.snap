@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Render 1`] = `
+<div
+  onDragStart={[Function]}
+  style={
+    Object {
+      "border": "1px solid black",
+    }
+  }
+>
+  If you are reading this, you might have lost network connectivity or this app broke.  If you could go to 
+  <a
+    href="https://www.facebook.com/inhumaneresourcescomic/"
+  >
+    this link
+  </a>
+  , click "Send Message" and tell me what you did before you saw this message, I would be grateful.  First, wait a second and see if this disappears and gets replaced by an image.
+</div>
+`;
+
+exports[`Test Render 2`] = `
+<img
+  onDragStart={[Function]}
+  src="test.gif"
+  style={
+    Object {
+      "border": "1px solid black",
+    }
+  }
+/>
+`;

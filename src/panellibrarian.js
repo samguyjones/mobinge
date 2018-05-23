@@ -32,8 +32,12 @@ export default class PanelLibrarian {
     if (manifest === undefined) {
       return this.manifest;
     }
-    this.manifest = manifest;
-    this.getPanelData = fetch(manifest, {cache: "no-store"});
+    // You can set manifest to false to load nothing, as you might for a unit
+    // test.
+    if (manifest) {
+      this.manifest = manifest;
+      this.getPanelData = fetch(manifest, {cache: "no-store"});
+    }
     return this;
   }
 
