@@ -17,12 +17,12 @@ export default class Arrows extends React.Component
     return(
       <div key="arrows" style={barStyle}>
         <span style={leftStyle}>
-        <a onClick={this.props.onFirst}><img src="images/first-arrow.png"/></a>
-          <a onClick={this.props.onBack}><img src="images/back-arrow.png"/></a>
+        <a onClick={this.props.onFirst} class="first-arrow"><img src="images/first-arrow.png"/></a>
+          <a onClick={this.props.onBack} class="back-arrow"><img src="images/back-arrow.png"/></a>
         </span>
         <span style={rightStyle}>
-          <a onClick={this.props.onNext}><img src="images/next-arrow.png"/></a>
-          <a onClick={this.props.onLast}><img src="images/last-arrow.png"/></a>
+          <a onClick={this.props.onNext} class="next-arrow"><img src="images/next-arrow.png"/></a>
+          <a onClick={this.props.onLast} class="last-arrow"><img src="images/last-arrow.png"/></a>
         </span>
       </div>
     );

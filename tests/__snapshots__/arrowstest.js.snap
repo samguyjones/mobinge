@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Render 1`] = `
+<div
+  style={
+    Object {
+      "position": "relative",
+      "width": "320px",
+    }
+  }
+>
+  <span
+    style={
+      Object {
+        "left": "0px",
+      }
+    }
+  >
+    <a
+      class="first-arrow"
+      onClick={undefined}
+    >
+      <img
+        src="images/first-arrow.png"
+      />
+    </a>
+    <a
+      class="back-arrow"
+      onClick={undefined}
+    >
+      <img
+        src="images/back-arrow.png"
+      />
+    </a>
+  </span>
+  <span
+    style={
+      Object {
+        "position": "absolute",
+        "right": "0px",
+      }
+    }
+  >
+    <a
+      class="next-arrow"
+      onClick={undefined}
+    >
+      <img
+        src="images/next-arrow.png"
+      />
+    </a>
+    <a
+      class="last-arrow"
+      onClick={undefined}
+    >
+      <img
+        src="images/last-arrow.png"
+      />
+    </a>
+  </span>
+</div>
+`;
