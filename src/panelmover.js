@@ -13,7 +13,7 @@ export default class PanelMover {
       this.dragComponent = myDraggable;
       return this;
     }
-    return dragComponent;
+    return this.dragComponent;
   }
 
   grab(e, data) {
@@ -31,7 +31,7 @@ export default class PanelMover {
     const dragX = this.dragComponent.state.x;
     if (isNaN(dragX)) console.log('state', this.dragComponent.state);
     const chunkOffset = dragX % this.chunkWidth;
-    const direction = this.toBoundary(Math.abs(chunkOffset)) || this.toDirection(mouseX);
+    const direction = this.toBoundary(chunkOffset) || this.toDirection(mouseX);
     const destination = this.getSnapDestination(dragX, chunkOffset,
       direction);
     this.moveResponse(destination);
@@ -54,23 +54,27 @@ export default class PanelMover {
   }
 
   toDirection(lastPosition) {
-    return lastPosition < this.landfall ? 1 : -1;
+    return lastPosition < this.landfall ? -1 : 1;
   }
 
   toBoundary(offset) {
-    if (offset > this.chunkWidth - this.boundary) {
-      return 1;
+    const direction = (offset >= 0) ? 1 : -1;
+    const difference = Math.abs(offset);
+    if (difference > this.chunkWidth - this.boundary) {
+      return direction;
     }
-    if (offset < this.boundary) {
-      return -1;
+    if (difference < this.boundary) {
+      return -direction;
     }
     return 0;
   }
 
   getSnapDestination(xPosition, offset, direction) {
-    if (direction == -1) {
-      return xPosition - offset;
+    const positive = offset > 0;
+    const toCenter = positive ? (direction == 1) : (direction == -1);
+    if (toCenter) {
+      return xPosition + ((this.chunkWidth - (offset*direction) ) * direction);
     }
-    return xPosition - (this.chunkWidth + offset);
+    return xPosition - offset;
   }
 }

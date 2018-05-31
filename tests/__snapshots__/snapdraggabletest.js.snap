@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tests With Rendered Component Render 1`] = `
+<div
+  className="react-draggable"
+  onMouseDown={[Function]}
+  onMouseUp={[Function]}
+  onTouchEnd={[Function]}
+  onTouchStart={[Function]}
+  style={
+    Object {
+      "touchAction": "none",
+      "transform": "translate(0px,0px)",
+    }
+  }
+  transform={null}
+>
+  Lorem ipsum dolor emmet.
+</div>
+`;

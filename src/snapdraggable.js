@@ -10,10 +10,6 @@ export default class SnapDraggable extends Draggable
     props.mover.draggable(this);
   }
 
-  componentDidMount() {
-    super.componentDidMount();
-  }
-
   snapDistance(distance) {
     this.snapTo(this.getLimit(this.state.x - distance));
   }
@@ -39,7 +35,7 @@ export default class SnapDraggable extends Draggable
   clearMovement()
   {
     if (this.timeout) {
-      clearTimeout(this.timeOut);      
+      clearTimeout(this.timeOut);
     }
   }
 
