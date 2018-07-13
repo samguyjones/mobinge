@@ -16,7 +16,7 @@ export default class PanelSet extends React.Component
       width: props.width,
       height: props.height
     };
-    this.mover = new PanelMover(this.state.width, (x) => {this.loadFromPanel(-x/this.state.width);});
+    this.mover = props.mover || new PanelMover(this.state.width, (x) => {this.loadFromPanel(-x/this.state.width);});
     this.panelRef = [];
   }
 
@@ -36,7 +36,7 @@ export default class PanelSet extends React.Component
               ref={(input) => { this.panelRef.push(input); }}/>;
             })
           });
-          if (this.currentPanel === 0) {
+          if (this.currentPanel === false) {
             this.goToPanel(this.librarian.getCurrentEntry() - 1);
           } else {
             this.loadPanels();
