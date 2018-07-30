@@ -5,19 +5,24 @@ import zeroFill from 'zero-fill';
 
 const optDef = [
   {
-    name: 'dest',
+    name: 'src',
     type: String,
     defaultOption: true
   },
   {
-    name: 'src',
+    name: 'add',
     type: String,
-    alias: 's'
+    alias: 'a'
   },
   {
-    name: 'extend',
-    type: Number,
-    alias: 'x'
+    name: 'date',
+    type: String,
+    alias: 'd'
+  },
+  {
+    name: 'thumbnail',
+    type: String,
+    alias: 't'
   }
 ];
 
@@ -54,24 +59,42 @@ function writeSource(contents, out) {
   })
 }
 
+function currentDate() {
+  let now = new Date();
+  return now.getYear() + "-" + zeroFill(2,now.getMonth()) + "-"
+      + zeroFill(2,now.getDate());
+}
+
+function getEntry(options, files)
+{
+  return {
+    images: files,
+    date: options.date || currentDate(),
+    thumbnail: options.thumbnail
+  }
+}
+
 const options = commandLineArgs(optDef);
 readSource(options.src)
 .then(function(obj) {
-  if (options.extend) {
-    obj.currentEntry = obj.images.length + 1;
-    for (let count = obj.currentEntry; count <= options.extend; count++) {
-      obj.images.push({
+  if (options.add) {
+    let first,last;
+    let files = [];
+    [first, last] = options.add.split('-');
+    for (let count = parseInt(first); count <= parseInt(last); count++) {
+      files.push({
         file: {
           "320px": "/ir" + zeroFill(4, count) + "-320.png"
         },
         "sequence": count
       });
     }
+    obj.entries.push(getEntry(options, files));
   }
   return obj;
 })
 .then(function(contents) {
-  return writeSource(contents, options.dest);
+  return writeSource(contents, options.src);
 })
 .then(function(response) {
   console.log(response);
