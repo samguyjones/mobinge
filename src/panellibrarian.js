@@ -3,13 +3,16 @@ const PANLIB_DEFAULT_START = 1;
 const PANLIB_DEFAULT_END = null;
 const PANLIB_DEFAULT_RESOLUTION = "300px";
 const PANLIB_DEFAULT_MANIFEST = "./manifest.json";
+const _images = Symbol('images');
 
 export default class PanelLibrarian {
+
   constructor(manifest, start, end) {
     this.startAt((start === undefined) ? PANLIB_DEFAULT_START : start)
         .manifest((manifest === undefined) ? PANLIB_DEFAULT_MANIFEST : manifest)
         .endAt((end === undefined) ? PANLIB_DEFAULT_END : end)
         .panels = null;
+    this[_images] = false;
   }
 
   startAt(start) {
@@ -43,7 +46,7 @@ export default class PanelLibrarian {
 
   pickPanels(resolution)
   {
-    return this.panelData.images.filter((panel) => {
+    return this.getImages().filter((panel) => {
       return (panel.sequence >= this.start) && ((this.end === null ) ||
           (panel.sequence <= this.end));
     })
@@ -53,6 +56,20 @@ export default class PanelLibrarian {
         url: this.panelData.path + panel.file[resolution]
       }
     });
+  }
+
+  getImages()
+  {
+    if (!this[_images]) {
+      const justImages = (imageList, currentEntry) => {
+        if (currentEntry.images) {
+          imageList = imageList.concat(currentEntry.images);
+        }
+        return imageList;
+      }
+      this[_images] = this.panelData.entries.reduce(justImages, []);
+    }
+    return this[_images];
   }
 
   fetchManifestJson()
@@ -69,7 +86,8 @@ export default class PanelLibrarian {
 
   getCurrentEntry()
   {
-    return this.panelData.currentEntry;
+    const lastEntry = this.panelData.entries.length -1;
+    return this.panelData.entries[lastEntry].images[0].sequence;
   }
 
   fetchPanels(resolution) {
