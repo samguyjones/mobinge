@@ -15,6 +15,9 @@ export default class SnapDraggable extends Draggable
   }
 
   snapTo(newX = this.state.x, newY = this.state.y, ongoing=false) {
+    if (!ongoing) {
+      newX = this.getLimit(newX);
+    }
     if (isNaN(newX)) {
       throw 'Destination not a number.';
     }

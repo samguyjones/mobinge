@@ -30,6 +30,9 @@ export default class PanelMover {
   snap(mouseX) {
     const dragX = this.dragComponent.state.x;
     if (isNaN(dragX)) console.log('state', this.dragComponent.state);
+    if (dragX === this.landfall) {
+      return;
+    }
     const chunkOffset = dragX % this.chunkWidth;
     const direction = this.toBoundary(chunkOffset) || this.toDirection(mouseX);
     const destination = this.getSnapDestination(dragX, chunkOffset,
