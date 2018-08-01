@@ -17,7 +17,7 @@ exports[`Test Render 1`] = `
     }
   >
     <a
-      class="first-arrow"
+      className="first-arrow"
       onClick={undefined}
     >
       <img
@@ -25,7 +25,7 @@ exports[`Test Render 1`] = `
       />
     </a>
     <a
-      class="back-arrow"
+      className="back-arrow"
       onClick={undefined}
     >
       <img
@@ -42,7 +42,7 @@ exports[`Test Render 1`] = `
     }
   >
     <a
-      class="next-arrow"
+      className="next-arrow"
       onClick={undefined}
     >
       <img
@@ -50,7 +50,7 @@ exports[`Test Render 1`] = `
       />
     </a>
     <a
-      class="last-arrow"
+      className="last-arrow"
       onClick={undefined}
     >
       <img
