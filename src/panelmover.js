@@ -1,19 +1,55 @@
 export default class PanelMover {
 
   constructor(width, moveResponse) {
+    this.clickSpot = false;
     this.landfall = false;
     this.boundary = 10;
     this.dragComponent = null;
     this.chunkWidth = width;
     this.moveResponse = moveResponse;
+    this.leftOffset = false;
+    this.rightOffset = false;
   }
 
-  draggable(myDraggable) {
-    if (myDraggable) {
-      this.dragComponent = myDraggable;
+  left(myLeft) {
+    if (myLeft) {
+      this.leftOffset = myLeft;
       return this;
     }
-    return this.dragComponent;
+    return this.leftOffset;
+  }
+
+  right(myRight) {
+    if (myRight) {
+      this.rightOffset = myRight;
+      return this;
+    }
+    return this.rightOffset;
+  }
+
+  clickIsDirection() {
+    if (this.clickSpot < this.left() + this.right()/2) {
+      return true;
+    }
+  }
+
+  clickIsEdge() {
+    const margin=15;
+    if (this.clickSpot < this.left() + margin) {
+      return -1;
+    }
+    if (this.clickSpot > this.right() - margin) {
+      return 1;
+    }
+    return 0;
+  }
+
+  setClickSpot(e) {
+    if (e instanceof MouseEvent) {
+      this.clickSpot = e.clientX;
+      return;
+    }
+    this.clickSpot = e.changedTouches[0].clientX;
   }
 
   grab(e, data) {
@@ -23,6 +59,7 @@ export default class PanelMover {
   }
 
   release(e, data) {
+    this.setClickSpot(e);
     this.snap(data.x);
     this.landfall = false;
   }
@@ -31,6 +68,9 @@ export default class PanelMover {
     const dragX = this.dragComponent.state.x;
     if (isNaN(dragX)) console.log('state', this.dragComponent.state);
     if (dragX === this.landfall) {
+      if (this.clickIsEdge()) {
+        this.snapPanels(this.clickIsEdge());
+      }
       return;
     }
     const chunkOffset = dragX % this.chunkWidth;
@@ -39,21 +79,6 @@ export default class PanelMover {
       direction);
     this.moveResponse(destination);
     this.dragComponent.snapTo(destination);
-  }
-
-  snapTo(destX)
-  {
-    this.dragComponent.snapTo(destX);
-  }
-
-  sudoSnapTo(destX)
-  {
-    this.dragComponent.clearMovement();
-    this.dragComponent.snapTo(destX);
-  }
-
-  snapPanels(distance) {
-    this.dragComponent.snapDistance(distance * this.chunkWidth);
   }
 
   toDirection(lastPosition) {

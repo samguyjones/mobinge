@@ -7,7 +7,6 @@ export default class SnapDraggable extends Draggable
     this.state.x = -props.startX;
     this.timeout = false;
     this.moveInterval = 5;
-    props.mover.draggable(this);
   }
 
   snapDistance(distance) {

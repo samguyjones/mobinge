@@ -4,6 +4,7 @@ import PanelMover from './panelmover.js';
 import SnapDraggable from './snapdraggable.js';
 import Arrows from './arrows.js';
 import Panel from './panel.js';
+import PanelFinder from './panelfinder.js';
 
 export default class PanelSet extends React.Component
 {
@@ -16,8 +17,8 @@ export default class PanelSet extends React.Component
       width: props.width,
       height: props.height
     };
-    this.mover = props.mover || new PanelMover(this.state.width, (x) => {this.loadFromPanel(-x/this.state.width);});
-    this.panelRef = [];
+    let mover = props.mover || new PanelMover(this.state.width, (x) => {this.loadFromPanel(-x/this.state.width);});
+    this.finder = new PanelFinder(this.librarian, mover, props.startPanel);
   }
 
   componentDidMount() {
@@ -33,43 +34,15 @@ export default class PanelSet extends React.Component
             panels: panelUrls.map(panel => {
               const key = 'panel-' + panel.sequence;
               return <Panel style={panelStyle} image={panel.url} key={key}
-              ref={(input) => { this.panelRef.push(input); }}/>;
+              ref={input => this.finder.addPanel(input)}/>;
             })
           });
           if (this.currentPanel === false) {
-            this.goToPanel(this.librarian.getCurrentEntry() - 1);
+            this.finder.goToPanel(this.librarian.getCurrentEntry() - 1);
           } else {
-            this.loadPanels();
+            this.finder.loadPanels();
           }
         });
-  }
-
-  moveFunction(goDirection) {
-    const panelDrift = this.props.arrowWidth * goDirection;
-    const newPanel = this.currentPanel + panelDrift;
-    return () => {
-      this.goToPanel(this.currentPanel + panelDrift);
-    }
-  }
-
-  endFunction(toStart) {
-    const destination = (toStart) ? 0 : (this.state.panels.length-this.props.arrowWidth);
-    return () => {
-      this.goToPanel(destination);
-    }
-  }
-
-  goToPanel(panelNumber) {
-    panelNumber = Math.max(panelNumber,0);
-    panelNumber = Math.min(panelNumber, this.state.panels.length - 1);
-    let destinationLeft = panelNumber * -this.state.width;
-    this.mover.sudoSnapTo(destinationLeft, true);
-    this.loadFromPanel(panelNumber);
-  }
-
-  loadFromPanel(panelNumber) {
-    this.currentPanel = panelNumber;
-    this.loadPanels();
   }
 
   getArrows() {
@@ -77,18 +50,8 @@ export default class PanelSet extends React.Component
       return null;
     }
     return <Arrows width={this.props.arrowWidth * this.state.width}
-        onNext={this.moveFunction(1)} onBack={this.moveFunction(-1)}
-        onFirst={this.endFunction(true)} onLast={this.endFunction(false)}/>;
-  }
-
-  loadPanels() {
-    const backBuffer = 4;
-    const frontBuffer = 8;
-    const fromPanel = Math.max(0, this.currentPanel - backBuffer);
-    const toPanel = Math.min(this.state.panels.length - 1, this.currentPanel + frontBuffer);
-    for (let count = fromPanel; count <= toPanel; count++) {
-      this.panelRef[count].load();
-    }
+        onNext={this.finder.moveFunction(1)} onBack={this.finder.moveFunction(-1)}
+        onFirst={this.finder.endFunction(true)} onLast={this.finder.endFunction(false)}/>;
   }
 
   render() {
@@ -107,9 +70,15 @@ export default class PanelSet extends React.Component
     const start = (e, data) => { this.mover.grab(e, data); };
     const stop = (e, data) => { this.mover.release(e, data); };
     const startX = this.state.width * this.currentPanel;
+    const setDimensions = el => {
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      this.mover.left(rect.left).right(rect.right);
+    };
     return (
-    <div key="panelWrapper">
-      <SnapDraggable axis="x" bounds={boundStats} mover={this.mover} onStart={start}
+    <div key="panelWrapper" ref={setDimensions}>
+      <SnapDraggable axis="x" bounds={boundStats}
+        ref={(draggable)=>this.finder.draggable(draggable)} onStart={start}
         onStop={stop} startX={startX}>
         <div key="panelset" style={panelSetStyle}>
           {this.state.panels}
