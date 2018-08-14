@@ -17,8 +17,7 @@ export default class PanelSet extends React.Component
       width: props.width,
       height: props.height
     };
-    let mover = props.mover || new PanelMover(this.state.width, (x) => {this.loadFromPanel(-x/this.state.width);});
-    this.finder = new PanelFinder(this.librarian, mover, props.startPanel);
+    this.finder = new PanelFinder(this.librarian, props.startPanel, this.state.width);
   }
 
   componentDidMount() {
@@ -67,13 +66,14 @@ export default class PanelSet extends React.Component
       bottom: 0,
       right: 0
     };
-    const start = (e, data) => { this.mover.grab(e, data); };
-    const stop = (e, data) => { this.mover.release(e, data); };
+    let mover = new PanelMover(this.finder);
+    const start = (e, data) => { mover.grab(e, data); };
+    const stop = (e, data) => { mover.release(e, data); };
     const startX = this.state.width * this.currentPanel;
     const setDimensions = el => {
       if (!el) return;
       const rect = el.getBoundingClientRect();
-      this.mover.left(rect.left).right(rect.right);
+      mover.left(rect.left).right(rect.right);
     };
     return (
     <div key="panelWrapper" ref={setDimensions}>

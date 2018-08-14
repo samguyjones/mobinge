@@ -1,14 +1,13 @@
 export default class PanelMover {
 
-  constructor(width, moveResponse) {
+  constructor(finder) {
     this.clickSpot = false;
     this.landfall = false;
     this.boundary = 10;
-    this.dragComponent = null;
-    this.chunkWidth = width;
-    this.moveResponse = moveResponse;
+    this.chunkWidth = finder.width;
     this.leftOffset = false;
     this.rightOffset = false;
+    this.finder = finder;
   }
 
   left(myLeft) {
@@ -65,11 +64,10 @@ export default class PanelMover {
   }
 
   snap(mouseX) {
-    const dragX = this.dragComponent.state.x;
-    if (isNaN(dragX)) console.log('state', this.dragComponent.state);
-    if (dragX === this.landfall) {
+    const dragX = this.finder.getDragXIfChanged();
+    if (!dragX) {
       if (this.clickIsEdge()) {
-        this.snapPanels(this.clickIsEdge());
+        this.finder.snapPanels(this.clickIsEdge());
       }
       return;
     }
@@ -77,8 +75,7 @@ export default class PanelMover {
     const direction = this.toBoundary(chunkOffset) || this.toDirection(mouseX);
     const destination = this.getSnapDestination(dragX, chunkOffset,
       direction);
-    this.moveResponse(destination);
-    this.dragComponent.snapTo(destination);
+    this.finder.snapTo(destination);
   }
 
   toDirection(lastPosition) {

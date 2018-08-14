@@ -1,8 +1,7 @@
 import PanelMover from '../src/panelmover.js'
 
 test('Grab', () => {
-  const moveDone = {};
-  const mover = new PanelMover(320, moveDone);
+  const mover = new PanelMover({width:320});
   mover.grab({}, {
     x: 12,
     y: 32
@@ -11,7 +10,7 @@ test('Grab', () => {
 });
 
 test('To Direction', () => {
-  const mover = new PanelMover(320, {});
+  const mover = new PanelMover({width:320});
   mover.grab({}, {
     x: 32
   });
@@ -20,14 +19,14 @@ test('To Direction', () => {
 });
 
 test('To Boundary', () => {
-  const mover = new PanelMover(320, {});
+  const mover = new PanelMover({width:320});
   expect(mover.toBoundary(9)).toBe(-1);
   expect(mover.toBoundary(78)).toBe(0);
   expect(mover.toBoundary(311)).toBe(1);
 });
 
 test('Get Snap Destination', () => {
-  const mover = new PanelMover(320, {});
+  const mover = new PanelMover({width:320});
   expect(mover.getSnapDestination(334, 14, -1)).toBe(320);
   expect(mover.getSnapDestination(334, 14, 1)).toBe(640);
   expect(mover.getSnapDestination(308, 308, 1)).toBe(320);
