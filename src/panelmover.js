@@ -77,7 +77,11 @@ export default class PanelMover {
 
   snapPanels(distance) {
     this.dragComponent.snapDistance(distance * this.width);
-    this.loadPanels();
+    this.loadFromPanel(this.currentPanel + distance);
+  }
+
+  skipEntry(direction) {
+    console.log("SkipEntry", direction);
   }
 
   getDragXIfChanged(posX) {

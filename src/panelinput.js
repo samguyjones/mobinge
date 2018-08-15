@@ -3,11 +3,13 @@ export default class PanelInput {
   constructor(mover) {
     this.clickSpot = false;
     this.landfall = false;
-    this.boundary = 10;
+    this.boundary = 30;
     this.chunkWidth = mover.width;
     this.leftOffset = false;
     this.rightOffset = false;
     this.mover = mover;
+    this.tapTime = 0;
+    this.ignoreMouseEvents = false;
   }
 
   left(myLeft) {
@@ -26,14 +28,14 @@ export default class PanelInput {
     return this.rightOffset;
   }
 
-  clickIsDirection() {
+  clickIsLeft() {
     if (this.clickSpot < this.left() + this.right()/2) {
       return true;
     }
   }
 
   clickIsEdge() {
-    const margin=15;
+    const margin=30;
     if (this.clickSpot < this.left() + margin) {
       return -1;
     }
@@ -63,12 +65,24 @@ export default class PanelInput {
     this.landfall = false;
   }
 
+  tap() {
+    const doubleClickMax = 400;
+    const doubleClickMin = 50;
+    if (this.clickIsEdge()) {
+      this.mover.snapPanels(this.clickIsEdge());
+    }
+    const clickInterval = new Date() - this.tapTime;
+    if ((clickInterval > doubleClickMin) && (clickInterval < doubleClickMax) ) {
+      this.tapTime = 0;
+      this.mover.skipEntry(this.clickIsLeft() ? -1 : 1);
+    }
+    this.tapTime = new Date();
+  }
+
   snap(mouseX) {
-    const dragX = this.mover.getDragXIfChanged();
+    const dragX = this.mover.getDragXIfChanged(this.landfall);
     if (!dragX) {
-      if (this.clickIsEdge()) {
-        this.mover.snapPanels(this.clickIsEdge());
-      }
+      this.tap();
       return;
     }
     const chunkOffset = dragX % this.chunkWidth;
