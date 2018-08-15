@@ -1,11 +1,11 @@
 import React from 'react';
-import PanelFinder from '../src/panelfinder.js';
+import PanelMover from '../src/panelmover.js';
 import renderer from 'react-test-renderer';
 
 test('Get Draggable', () => {
   const mover = {
   };
-  var test = new PanelFinder(null, 2, 320);
+  var test = new PanelMover(null, 2, 320);
 
   const mockDrag = {
     name: 'TestDraggable'
@@ -18,7 +18,7 @@ test('Get Draggable', () => {
 test('Snap To', () => {
   const mover = {
   };
-  var test = new PanelFinder(null, 2, 320);
+  var test = new PanelMover(null, 2, 320);
   const mockDrag = {
     snapTo: jest.fn()
   };
@@ -32,7 +32,7 @@ test('Snap To', () => {
 test('Sudo Snap To', () => {
   const mover = {
   };
-  var test = new PanelFinder(null, 2, 320);
+  var test = new PanelMover(null, 2, 320);
   const mockDrag = {
     snapTo: jest.fn(),
     clearMovement: jest.fn()
@@ -48,7 +48,7 @@ test('Sudo Snap To', () => {
 test('Snap Panels', () => {
   const mover = {
   };
-  var test = new PanelFinder(null, 2, 320, mover);
+  var test = new PanelMover(null, 2, 320, mover);
   const mockDrag = {
     snapDistance: jest.fn()
   };
@@ -67,7 +67,7 @@ test('Snap Panels', () => {
 test('LoadPanels', () => {
   const mover = {
   };
-  var test = new PanelFinder(null, 2, 320);
+  var test = new PanelMover(null, 2, 320);
   const mockDrag = {
     snapDistance: jest.fn()
   };
@@ -90,7 +90,7 @@ test('LoadPanels', () => {
 test('LoadFromPanel', () => {
   const mover = {
   };
-  var test = new PanelFinder(null, 14, 320);
+  var test = new PanelMover(null, 14, 320);
 
   let panelRefs = [];
   for (let i=0; i <= 14; i++) {
@@ -106,7 +106,7 @@ test('LoadFromPanel', () => {
 });
 
 test('GoToPanel', () => {
-  var test = new PanelFinder(null, 14, 320);
+  var test = new PanelMover(null, 14, 320);
   test.sudoSnapTo = jest.fn();
   const mockDrag = {
     snapTo: jest.fn(),
@@ -125,7 +125,7 @@ test('GoToPanel', () => {
 test('EndFunction', () => {
   const mover = {
   };
-  var test = new PanelFinder(null, 14, 320);
+  var test = new PanelMover(null, 14, 320);
 
   let panelRefs = [];
   for (let i=0; i <= 13; i++) {
@@ -146,7 +146,7 @@ test('EndFunction', () => {
 test('MoveFunction', () => {
   const mover = {
   };
-  var test = new PanelFinder(null, 5, 320);
+  var test = new PanelMover(null, 5, 320);
 
   let panelRefs = [];
   for (let i=0; i <= 13; i++) {

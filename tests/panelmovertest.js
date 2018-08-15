@@ -1,40 +1,40 @@
-import PanelMover from '../src/panelmover.js'
+import PanelInput from '../src/panelinput.js'
 
 test('Grab', () => {
-  const mover = new PanelMover({width:320});
-  mover.grab({}, {
+  const input = new PanelInput({width:320});
+  input.grab({}, {
     x: 12,
     y: 32
   });
-  expect(mover.landfall).toBe(12);
+  expect(input.landfall).toBe(12);
 });
 
 test('To Direction', () => {
-  const mover = new PanelMover({width:320});
-  mover.grab({}, {
+  const input = new PanelInput({width:320});
+  input.grab({}, {
     x: 32
   });
-  expect(mover.toDirection(12)).toBe(-1);
-  expect(mover.toDirection(80)).toBe(1);
+  expect(input.toDirection(12)).toBe(-1);
+  expect(input.toDirection(80)).toBe(1);
 });
 
 test('To Boundary', () => {
-  const mover = new PanelMover({width:320});
-  expect(mover.toBoundary(9)).toBe(-1);
-  expect(mover.toBoundary(78)).toBe(0);
-  expect(mover.toBoundary(311)).toBe(1);
+  const input = new PanelInput({width:320});
+  expect(input.toBoundary(9)).toBe(-1);
+  expect(input.toBoundary(78)).toBe(0);
+  expect(input.toBoundary(311)).toBe(1);
 });
 
 test('Get Snap Destination', () => {
-  const mover = new PanelMover({width:320});
-  expect(mover.getSnapDestination(334, 14, -1)).toBe(320);
-  expect(mover.getSnapDestination(334, 14, 1)).toBe(640);
-  expect(mover.getSnapDestination(308, 308, 1)).toBe(320);
-  expect(mover.getSnapDestination(308, 308, -1)).toBe(0);
-  expect(mover.getSnapDestination(-334, -14, -1)).toBe(-640);
-  expect(mover.getSnapDestination(-334, -14, 1)).toBe(-320);
-  expect(mover.getSnapDestination(-308, -308, 1)).toBe(0);
-  expect(mover.getSnapDestination(-308, -308, -1)).toBe(-320);
+  const input = new PanelInput({width:320});
+  expect(input.getSnapDestination(334, 14, -1)).toBe(320);
+  expect(input.getSnapDestination(334, 14, 1)).toBe(640);
+  expect(input.getSnapDestination(308, 308, 1)).toBe(320);
+  expect(input.getSnapDestination(308, 308, -1)).toBe(0);
+  expect(input.getSnapDestination(-334, -14, -1)).toBe(-640);
+  expect(input.getSnapDestination(-334, -14, 1)).toBe(-320);
+  expect(input.getSnapDestination(-308, -308, 1)).toBe(0);
+  expect(input.getSnapDestination(-308, -308, -1)).toBe(-320);
 });
 
 // test('Complete Snap', () => {

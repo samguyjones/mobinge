@@ -1,105 +1,88 @@
+import React from 'react';
+import PanelLibrarian from './panellibrarian';
+import Panel from './panel.js';
+
 export default class PanelMover {
-
-  constructor(finder) {
-    this.clickSpot = false;
-    this.landfall = false;
-    this.boundary = 10;
-    this.chunkWidth = finder.width;
-    this.leftOffset = false;
-    this.rightOffset = false;
-    this.finder = finder;
+  constructor(librarian, currentPanel, width) {
+    this.librarian = librarian;
+    this.currentPanel = currentPanel;
+    this.width = width;
+    this.panelRefs = [];
+    this.dragComponent=null;
   }
 
-  left(myLeft) {
-    if (myLeft) {
-      this.leftOffset = myLeft;
+  addPanel(panel) {
+    this.panelRefs.push(panel);
+  }
+
+  loadPanels() {
+    const backBuffer = 4;
+    const frontBuffer = 8;
+    const fromPanel = Math.max(0, this.currentPanel - backBuffer);
+    const toPanel = Math.min(this.panelRefs.length - 1, this.currentPanel + frontBuffer);
+    for (let count = fromPanel; count <= toPanel; count++) {
+      this.panelRefs[count].load();
+    }
+  }
+
+  loadFromPanel(panelNumber) {
+    this.currentPanel = panelNumber;
+    this.loadPanels();
+  }
+
+  loadFromPoint(destX) {
+    this.loadFromPanel(-destX / this.width);
+  }
+
+  goToPanel(panelNumber) {
+    panelNumber = Math.max(panelNumber,0);
+    panelNumber = Math.min(panelNumber, this.panelRefs.length - 1);
+    let destinationLeft = panelNumber * -this.width;
+    this.sudoSnapTo(destinationLeft, true);
+    this.loadFromPanel(panelNumber);
+  }
+
+  moveFunction(goDirection, arrowWidth) {
+    const panelDrift = arrowWidth * goDirection;
+    return () => {
+      this.goToPanel(this.currentPanel + panelDrift);
+    }
+  }
+
+  endFunction(toStart, arrowWidth) {
+    return () => {
+      this.goToPanel((toStart) ? 0 : (this.panelRefs.length-arrowWidth));
+    }
+  }
+
+  draggable(myDraggable) {
+    if (myDraggable) {
+      this.dragComponent = myDraggable;
       return this;
     }
-    return this.leftOffset;
+    return this.dragComponent;
   }
 
-  right(myRight) {
-    if (myRight) {
-      this.rightOffset = myRight;
-      return this;
-    }
-    return this.rightOffset;
+  snapTo(destX)
+  {
+    this.dragComponent.snapTo(destX);
+    this.loadFromPoint(destX);
   }
 
-  clickIsDirection() {
-    if (this.clickSpot < this.left() + this.right()/2) {
-      return true;
-    }
+  sudoSnapTo(destX)
+  {
+    this.dragComponent.clearMovement();
+    this.snapTo(destX);
   }
 
-  clickIsEdge() {
-    const margin=15;
-    if (this.clickSpot < this.left() + margin) {
-      return -1;
-    }
-    if (this.clickSpot > this.right() - margin) {
-      return 1;
-    }
-    return 0;
+  snapPanels(distance) {
+    this.dragComponent.snapDistance(distance * this.width);
+    this.loadPanels();
   }
 
-  setClickSpot(e) {
-    if (e instanceof MouseEvent) {
-      this.clickSpot = e.clientX;
-      return;
-    }
-    this.clickSpot = e.changedTouches[0].clientX;
-  }
-
-  grab(e, data) {
-    if (this.landfall === false) {
-      this.landfall = data.x;
-    }
-  }
-
-  release(e, data) {
-    this.setClickSpot(e);
-    this.snap(data.x);
-    this.landfall = false;
-  }
-
-  snap(mouseX) {
-    const dragX = this.finder.getDragXIfChanged();
-    if (!dragX) {
-      if (this.clickIsEdge()) {
-        this.finder.snapPanels(this.clickIsEdge());
-      }
-      return;
-    }
-    const chunkOffset = dragX % this.chunkWidth;
-    const direction = this.toBoundary(chunkOffset) || this.toDirection(mouseX);
-    const destination = this.getSnapDestination(dragX, chunkOffset,
-      direction);
-    this.finder.snapTo(destination);
-  }
-
-  toDirection(lastPosition) {
-    return lastPosition < this.landfall ? -1 : 1;
-  }
-
-  toBoundary(offset) {
-    const direction = (offset >= 0) ? 1 : -1;
-    const difference = Math.abs(offset);
-    if (difference > this.chunkWidth - this.boundary) {
-      return direction;
-    }
-    if (difference < this.boundary) {
-      return -direction;
-    }
-    return 0;
-  }
-
-  getSnapDestination(xPosition, offset, direction) {
-    const positive = offset > 0;
-    const toCenter = positive ? (direction == 1) : (direction == -1);
-    if (toCenter) {
-      return xPosition + ((this.chunkWidth - (offset*direction) ) * direction);
-    }
-    return xPosition - offset;
+  getDragXIfChanged(posX) {
+    const dragX = this.dragComponent.state.x;
+    if (isNaN(dragX)) console.log('state', this.dragComponent.state);
+    return (dragX === posX) ? false : dragX;
   }
 }
