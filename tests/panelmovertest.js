@@ -50,7 +50,8 @@ test('Snap Panels', () => {
   };
   var test = new PanelMover(null, 2, 320, mover);
   const mockDrag = {
-    snapDistance: jest.fn()
+    snapDistance: jest.fn(),
+    clearMovement: jest.fn()
   };
   test.draggable(mockDrag);
   expect(test.draggable()).toBe(mockDrag);

@@ -4,6 +4,7 @@ const PANLIB_DEFAULT_END = null;
 const PANLIB_DEFAULT_RESOLUTION = "300px";
 const PANLIB_DEFAULT_MANIFEST = "./manifest.json";
 const _images = Symbol('images');
+const _entries = Symbol('entries');
 
 export default class PanelLibrarian {
 
@@ -61,15 +62,29 @@ export default class PanelLibrarian {
   getImages()
   {
     if (!this[_images]) {
-      const justImages = (imageList, currentEntry) => {
+      const justImages = (imageList, currentEntry, entryNum) => {
         if (currentEntry.images) {
-          imageList = imageList.concat(currentEntry.images);
+          let images = currentEntry.images.map(image => {
+            image.entryNum = entryNum;
+            return image;
+          });
+          imageList = imageList.concat(images);
         }
         return imageList;
       }
       this[_images] = this.panelData.entries.reduce(justImages, []);
     }
     return this[_images];
+  }
+
+  getImageEntry(imageNum)
+  {
+    return this.getImages()[imageNum].entryNum;
+  }
+
+  getEntryFirstImage(entryNum)
+  {
+    return this.panelData.entries[entryNum].images[0].sequence - 1;
   }
 
   fetchManifestJson()

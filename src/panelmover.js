@@ -76,12 +76,23 @@ export default class PanelMover {
   }
 
   snapPanels(distance) {
-    this.dragComponent.snapDistance(distance * this.width);
     this.loadFromPanel(this.currentPanel + distance);
+    this.dragComponent.clearMovement();
+    this.dragComponent.snapDistance(distance * this.width);
   }
 
   skipEntry(direction) {
-    console.log("SkipEntry", direction);
+    const currentEntry = this.librarian.getImageEntry(this.currentPanel);
+    if (direction > 0) {
+      this.goToPanel(this.librarian.getEntryFirstImage(currentEntry+1));
+      return;
+    }
+    const entryStart = this.librarian.getEntryFirstImage(currentEntry);
+    if (entryStart < this.currentPanel) {
+      this.goToPanel(entryStart);
+      return;
+    }
+    this.goToPanel(this.librarian.getEntryFirstImage(currentEntry-1))
   }
 
   getDragXIfChanged(posX) {
