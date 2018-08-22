@@ -29,22 +29,6 @@ test('Snap To', () => {
   expect(mockDrag.snapTo.mock.calls[0][0]).toBe(42);
 });
 
-test('Sudo Snap To', () => {
-  const mover = {
-  };
-  var test = new PanelMover(null, 2, 320);
-  const mockDrag = {
-    snapTo: jest.fn(),
-    clearMovement: jest.fn()
-  };
-  test.draggable(mockDrag);
-  expect(test.draggable()).toBe(mockDrag);
-  test.sudoSnapTo(42);
-  expect(mockDrag.snapTo.mock.calls.length).toBe(1);
-  expect(mockDrag.snapTo.mock.calls[0][0]).toBe(42);
-  expect(mockDrag.clearMovement.mock.calls.length).toBe(1);
-});
-
 test('Snap Panels', () => {
   const mover = {
   };
@@ -115,7 +99,7 @@ test('LoadFromPanel', () => {
 
 test('GoToPanel', () => {
   var test = new PanelMover(null, 14, 320);
-  test.sudoSnapTo = jest.fn();
+  test.snapTo = jest.fn();
   const mockDrag = {
     snapTo: jest.fn(),
     clearMovement: jest.fn()
@@ -126,7 +110,8 @@ test('GoToPanel', () => {
     test.addPanel(null);
   }
   test.goToPanel(4);
-  expect(test.sudoSnapTo.mock.calls[0][0]).toBe(-1280);
+  expect(mockDrag.clearMovement.mock.calls.length).toBe(1);
+  expect(test.snapTo.mock.calls[0][0]).toBe(-1280);
   expect(test.loadFromPanel.mock.calls[0][0]).toBe(4);
 });
 

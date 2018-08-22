@@ -10,6 +10,7 @@ export default class PanelInput {
     this.mover = mover;
     this.tapTime = 0;
     this.ignoreMouseEvents = false;
+    this.isTouchScreen = false;
   }
 
   left(myLeft) {
@@ -55,25 +56,40 @@ export default class PanelInput {
   }
 
   grab(e, data) {
+    if (this.redundantEvent(e)) {
+      return;
+    }
     if (this.landfall === false) {
       this.landfall = data.x;
     }
   }
 
   release(e, data) {
+    if (this.redundantEvent(e)) {
+      return;
+    }
     this.setClickSpot(e);
     this.snap(data.x);
     this.landfall = false;
   }
 
+  redundantEvent(e) {
+    if (this.touchScreen && e.clientX) {
+      return true;
+    }
+    if (!((this.touchScreen) || (e.clientX))) {
+      this.touchScreen = true;
+    }
+    return false
+  }
+
   tap() {
     const doubleClickMax = 400;
-    const doubleClickMin = 50;
-    if (this.clickIsEdge()) {
-      this.mover.snapPanels(this.clickIsEdge());
-    }
     const clickInterval = new Date() - this.tapTime;
-    if ((clickInterval > doubleClickMin) && (clickInterval < doubleClickMax) ) {
+    if (this.clickIsEdge()) {
+      this.mover.snapPanels(this.clickIsEdge(), true);
+    }
+    if (clickInterval < doubleClickMax) {
       this.tapTime = 0;
       this.mover.skipEntry(this.clickIsLeft() ? -1 : 1);
     }

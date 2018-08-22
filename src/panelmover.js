@@ -34,14 +34,6 @@ export default class PanelMover {
     this.loadFromPanel(-destX / this.width);
   }
 
-  goToPanel(panelNumber) {
-    panelNumber = Math.max(panelNumber,0);
-    panelNumber = Math.min(panelNumber, this.panelRefs.length - 1);
-    let destinationLeft = panelNumber * -this.width;
-    this.sudoSnapTo(destinationLeft, true);
-    this.loadFromPanel(panelNumber);
-  }
-
   moveFunction(goDirection, arrowWidth) {
     const panelDrift = arrowWidth * goDirection;
     return () => {
@@ -51,7 +43,7 @@ export default class PanelMover {
 
   endFunction(toStart, arrowWidth) {
     return () => {
-      this.goToPanel((toStart) ? 0 : (this.panelRefs.length-arrowWidth));
+      this.goToPanel((toStart) ? 0 : (this.panelRefs.length-arrowWidth), true);
     }
   }
 
@@ -63,21 +55,10 @@ export default class PanelMover {
     return this.dragComponent;
   }
 
-  snapTo(destX)
-  {
-    this.dragComponent.snapTo(destX);
-    this.loadFromPoint(destX);
+  snapPanels(distance, locking) {
+    this.goToPanel(this.currentPanel + distance, locking);
   }
 
-  sudoSnapTo(destX)
-  {
-    this.dragComponent.clearMovement();
-    this.snapTo(destX);
-  }
-
-  snapPanels(distance) {
-    this.goToPanel(this.currentPanel + distance);
-  }
 
   skipEntry(direction) {
     const currentEntry = this.librarian.getImageEntry(this.currentPanel);
@@ -97,6 +78,23 @@ export default class PanelMover {
     }
     this.goToPanel(this.librarian.getEntryFirstImage(currentEntry-1))
   }
+
+  goToPanel(panelNumber, locking) {
+    panelNumber = Math.max(panelNumber,0);
+    panelNumber = Math.min(panelNumber, this.panelRefs.length - 1);
+    let destinationLeft = panelNumber * -this.width;
+    if (!locking) {
+      this.dragComponent.clearMovement();
+    }
+    this.snapTo(destinationLeft, true);
+  }
+
+  snapTo(destX)
+  {
+    this.dragComponent.snapTo(destX);
+    this.loadFromPoint(destX);
+  }
+
 
   getDragXIfChanged(posX) {
     const dragX = this.dragComponent.state.x;
