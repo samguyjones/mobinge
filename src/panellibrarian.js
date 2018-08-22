@@ -87,6 +87,11 @@ export default class PanelLibrarian {
     return this.panelData.entries[entryNum].images[0].sequence - 1;
   }
 
+  getLastEntry()
+  {
+    return this.panelData.entries.length - 1;
+  }
+
   fetchManifestJson()
   {
     if (!this.getPanelData) {

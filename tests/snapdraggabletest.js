@@ -29,9 +29,9 @@ describe('Tests With Rendered Component', () => {
   });
 
   test('Get Tick Destination', () => {
-    expect(snapRef.getTickDestination(0, 200)).toBe(25);
+    expect(snapRef.getTickDestination(0, 200)).toBe(50);
     expect(snapRef.getTickDestination(0,7)).toBe(7);
-    expect(snapRef.getTickDestination(200,0)).toBe(175);
+    expect(snapRef.getTickDestination(200,0)).toBe(150);
   });
 
   test('Render', () => {

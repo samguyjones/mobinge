@@ -76,20 +76,23 @@ export default class PanelMover {
   }
 
   snapPanels(distance) {
-    this.loadFromPanel(this.currentPanel + distance);
-    this.dragComponent.clearMovement();
-    this.dragComponent.snapDistance(distance * this.width);
+    this.goToPanel(this.currentPanel + distance);
   }
 
   skipEntry(direction) {
     const currentEntry = this.librarian.getImageEntry(this.currentPanel);
     if (direction > 0) {
-      this.goToPanel(this.librarian.getEntryFirstImage(currentEntry+1));
+      if (currentEntry < this.librarian.getLastEntry()) {
+        this.goToPanel(this.librarian.getEntryFirstImage(currentEntry+1));
+      }
       return;
     }
     const entryStart = this.librarian.getEntryFirstImage(currentEntry);
     if (entryStart < this.currentPanel) {
-      this.goToPanel(entryStart);
+        this.goToPanel(entryStart);
+      return;
+    }
+    if (currentEntry == 0) {
       return;
     }
     this.goToPanel(this.librarian.getEntryFirstImage(currentEntry-1))

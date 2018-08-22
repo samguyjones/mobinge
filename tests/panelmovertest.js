@@ -50,19 +50,26 @@ test('Snap Panels', () => {
   };
   var test = new PanelMover(null, 2, 320, mover);
   const mockDrag = {
-    snapDistance: jest.fn(),
+    snapTo: jest.fn(),
     clearMovement: jest.fn()
   };
+  let panelRefs = [];
+  for (let i=0; i <= 14; i++) {
+    panelRefs.push({
+      load: jest.fn()
+    });
+  }
+  test.panelRefs = panelRefs;
   test.draggable(mockDrag);
   expect(test.draggable()).toBe(mockDrag);
   test.snapPanels(2);
   test.snapPanels(-1);
   test.snapPanels(4);
-  const calls = mockDrag.snapDistance.mock.calls;
+  const calls = mockDrag.snapTo.mock.calls;
   expect(calls.length).toBe(3);
-  expect(calls[0][0]).toBe(640);
-  expect(calls[1][0]).toBe(-320);
-  expect(calls[2][0]).toBe(1280);
+  expect(calls[0][0]).toBe(-1280);
+  expect(calls[1][0]).toBe(-960);
+  expect(calls[2][0]).toBe(-2240);
 });
 
 test('LoadPanels', () => {

@@ -46,11 +46,12 @@ export default class PanelInput {
   }
 
   setClickSpot(e) {
-    if (e instanceof MouseEvent) {
+    if (e.clientX) {
       this.clickSpot = e.clientX;
       return;
     }
-    this.clickSpot = e.changedTouches[0].clientX;
+    let touches = (e.touches.length) ? e.touches : e.changedTouches;
+    this.clickSpot = touches[0].clientX;
   }
 
   grab(e, data) {

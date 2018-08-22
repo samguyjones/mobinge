@@ -51,7 +51,7 @@ export default class SnapDraggable extends Draggable
   getTickDestination(current, goal) {
     const lastSnap = 8;
     const distance = Math.abs(current-goal);
-    const steps = 8;
+    const steps = 4;
     if (distance < lastSnap) {
       return goal;
     }
