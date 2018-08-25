@@ -56,11 +56,16 @@ export default class PanelInput {
   }
 
   grab(e, data) {
+    const delay=400;
     if (this.redundantEvent(e)) {
       return;
     }
     if (this.landfall === false) {
       this.landfall = data.x;
+      this.setClickSpot(e);
+      if (this.clickIsEdge()) {
+        setTimeout((this.holdEdge(this.clickIsEdge())), 750);
+      }
     }
   }
 
@@ -71,6 +76,17 @@ export default class PanelInput {
     this.setClickSpot(e);
     this.snap(data.x);
     this.landfall = false;
+  }
+
+  holdEdge(direction) {
+    const pace = 200;
+    return () => {
+      if (!this.landfall) {
+        return;
+      }
+      this.mover.snapPanels(direction);
+      setTimeout(this.holdEdge(direction).bind(this), pace);
+    }
   }
 
   redundantEvent(e) {

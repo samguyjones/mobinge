@@ -24,7 +24,13 @@ export default class PanelSet extends React.Component
     const panelStyle = {
       width: this.state.width + 'px',
       height: this.state.height + 'px',
-      display: 'inline-block'
+      display: 'inline-block',
+      MozUserSelect: 'none',
+      WebkitUserSelect: 'none',
+      userSelect: 'none',
+      pointerEvent: 'none',
+      MsUserSelect: 'none',
+      WebkitTouchCallout: 'none'
     };
     this.librarian.fetchPanels(this.state.width + 'px')
         .then(panelUrls => {

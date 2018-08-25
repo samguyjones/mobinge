@@ -30,6 +30,11 @@ window.addEventListener('DOMContentLoaded', () => {
   );
 });
 
+window.oncontextmenu = function(event) {
+     event.preventDefault();
+     event.stopPropagation();
+     return false;
+};
 // window.addEventListener('DOMContentLoaded', () => {
 //   const mobinge = <div>
 //     <Moose name="Billy"/>
