@@ -70,7 +70,7 @@ function writeSource(contents, out) {
 
 function currentDate() {
   var now = new Date();
-  return now.getYear() + "-" + (0, _zeroFill2.default)(2, now.getMonth()) + "-" + (0, _zeroFill2.default)(2, now.getDate());
+  return now.getYear() + 1900 + "-" + (0, _zeroFill2.default)(2, now.getMonth() + 1) + "-" + (0, _zeroFill2.default)(2, now.getDate());
 }
 
 function getEntry(options, files) {
