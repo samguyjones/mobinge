@@ -105,14 +105,13 @@ test('GoToPanel', () => {
     clearMovement: jest.fn()
   };
   test.draggable(mockDrag);
-  test.loadFromPanel = jest.fn();
+  test.snapTo = jest.fn();
   for (let i=0; i <= 4; i++) {
     test.addPanel(null);
   }
   test.goToPanel(4);
   expect(mockDrag.clearMovement.mock.calls.length).toBe(1);
   expect(test.snapTo.mock.calls[0][0]).toBe(-1280);
-  expect(test.loadFromPanel.mock.calls[0][0]).toBe(4);
 });
 
 test('EndFunction', () => {

@@ -47,15 +47,25 @@ export default class PanelLibrarian {
 
   pickPanels(resolution)
   {
-    return this.getImages().filter((panel) => {
-      return (panel.sequence >= this.start) && ((this.end === null ) ||
-          (panel.sequence <= this.end));
-    })
-    .map((panel) => {
-      return {
-        sequence: panel.sequence,
-        url: this.panelData.path + panel.file[resolution]
-      }
+    return () => {
+      return this.getImages().filter((panel) => {
+        return (panel.sequence >= this.start) && ((this.end === null ) ||
+            (panel.sequence <= this.end));
+      })
+      .map((panel) => {
+        return {
+          sequence: panel.sequence,
+          url: this.panelData.path + panel.file[resolution]
+        }
+      });
+    }
+  }
+
+  pickEntries()
+  {
+    return this.panelData.entries.map((entry) => {
+      entry.thumbnailUrl = this.panelData.path + entry.thumbnail;
+      return entry;
     });
   }
 
@@ -112,15 +122,23 @@ export default class PanelLibrarian {
 
   fetchPanels(resolution) {
     resolution = (resolution == undefined) ? PANLIB_DEFAULT_RESOLUTION : resolution;
+    return this.fetchData(this.pickPanels(resolution));
+  }
+
+  fetchEntries() {
+    return this.fetchData(() => this.pickEntries());
+  }
+
+  fetchData(finder) {
     if (this.panels !== null) {
       return new Promise(() => {
-        return this.pickPanels(resolution);
+        return finder();
       });
     }
     return this.fetchManifestJson()
     .then(panelData => {
       this.panelData = panelData;
-      return this.pickPanels(resolution);
-    })
+      return finder();
+    });
   }
 }

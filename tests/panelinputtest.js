@@ -2,7 +2,9 @@ import PanelInput from '../src/panelinput.js'
 
 test('Grab', () => {
   const input = new PanelInput({width:320});
-  input.grab({}, {
+  input.grab({
+    clientX: 17
+  }, {
     x: 12,
     y: 32
   });
@@ -11,7 +13,9 @@ test('Grab', () => {
 
 test('To Direction', () => {
   const input = new PanelInput({width:320});
-  input.grab({}, {
+  input.grab({
+    clientX: 37
+  }, {
     x: 32
   });
   expect(input.toDirection(12)).toBe(-1);

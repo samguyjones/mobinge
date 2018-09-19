@@ -26,7 +26,7 @@ describe('Tests Using Mock Manifest', () => {
             }
           ],
           "date": "2018-01-07",
-          "thumbnail": "./snapshot0001.png"
+          "thumbnail": "snapshot0001.png"
       },
       {
           'images': [
@@ -46,7 +46,7 @@ describe('Tests Using Mock Manifest', () => {
             }
           ],
           "date": "2018-01-07",
-          "thumbnail": "./snapshot0001.png"
+          "thumbnail": "snapshot0002.png"
     },
   ]
   };
@@ -127,4 +127,16 @@ describe('Tests Using Mock Manifest', () => {
         fail(error);
       });
   });
+
+  test('Get entries', () => {
+    librarian.fetchEntries()
+      .then((entryList) => {
+        expect(entryList.length).toBe(2);
+        expect(entryList[0].thumbnailUrl).toBe('/test/snapshot0001.png');
+        expect(entryList[1].thumbnailUrl).toBe('/test/snapshot0002.png');
+      })
+      .catch((error) => {
+        fail(error);
+      });
+  })
 });
