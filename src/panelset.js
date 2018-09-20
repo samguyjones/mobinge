@@ -34,7 +34,6 @@ export default class PanelSet extends React.Component
     };
     this.librarian.fetchPanels(this.state.width + 'px')
         .then(panelUrls => {
-          var cushion = 0;
           this.setState({
             panels: panelUrls.map(panel => {
               const key = 'panel-' + panel.sequence;

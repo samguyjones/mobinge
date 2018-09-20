@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 import Mobinge from './mobinge';
+import EntrySet from './entryset';
 import {
   HashRouter as Router,
   Route,
@@ -16,11 +17,18 @@ const Reader = ({match}) => {
     </div>;
 }
 
+const Index = () => {
+  return <div>
+      <EntrySet/>
+  </div>;
+}
+
 
 window.addEventListener('DOMContentLoaded', () => {
   const mobinge = <Router>
     <div>
       <Route path="/panel/:panelNo" component={Reader}/>
+      <Route path="/index" component={Index}/>
       <Route exact path="/" component={Reader}/>
     </div>
   </Router>;
@@ -29,14 +37,3 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('root')
   );
 });
-
-// window.addEventListener('DOMContentLoaded', () => {
-//   const mobinge = <div>
-//     <Moose name="Billy"/>
-//     <Strip width="320" maxPanel="4" arrowThreshold="2" startPanel="18"/>
-//   </div>;
-//   ReactDOM.render(
-//     mobinge,
-//     document.getElementById('root')
-//   );
-// });
