@@ -87,4 +87,38 @@ Here's a list of what all this means:
 When you add a new entry to the project, you put the images in a visible folder and update the manifest to point to the
 images.  There's a manifest tool in Mobinge called the "manifester.js".  I'll describe that later on as well.
 
-## Setting up the index page.
+## Index Page
+This is an HTML page that loads the bundle.js and kicks off Mobinge.  The page for my comic looks like this:
+```html
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    </meta>
+    <title>InhumaneResources</title>
+    <script type="text/javascript" src="bundle.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
+```
+The content attribute for the meta tag is important if you're going to display this on Mobile.  Other than that, this just has the bare essentials.  If you wanted special style or framing for the page, this is where you'd put it.
+
+## Main.js
+I need to move a lot of this page to different settings files, but until then, you have to edit the main.js if you want to change how far Mobinge expands, what resolution to use for the panels or what you use for a title image.  Right now, it runs with a React Router and a couple of paths.
+
+### Reader
+This is the basic comic.  It displays the panels.  Right now, it has a header with a link to the index.  It calls "Mobinge", the entity that draws the panels, with these attributes:
+
+* *width* This is the width of each panel.  It should match a width given to each image in the manifest as described above.
+The entire set of panels can take up a few times this width, depending how many panels display at once.
+* *maxPanel* Mobinge will grow responsively.  If you have a width of 400 and a screen 1650 pixels wide, Mobinge will display four panels.  MaxPanel sets a maximum.  So if you had a 3000 pixel wide monitor and a maxPanel of 4, only four panels would display, though it could go up to 7 if maxPanel were set that high.
+* *arrowThreshold* Normally, navigation arrows appear below the panels.  Mobinge will hide the arrows if there are fewer than arrowThreshold panels showing.
+* *startPanel* Mobinge will start at the specified panel.  If no panel is specified, Mobinge will start at the first panel of the last entry.
+* *manifest* This is the file that keeps an index of all panels and entries as described above.  Here is where you set its location.
+
+### EntrySet
+I just finished this component.  It displays a list of thumbnails for each entry, and each one acts as a link to the first panel of that entry.  This should take 'manifest' as an argument, but it's currently stuck to "manifest.json".
+
+## Manifester
+This is a tool.  Its source is in the tools-src directory, and it's built with "yarn run build-tool".  That will create a complete manifester.js in the tools directory.  This code exists as an example right now.   If you run "./manifester *path_to_manifest* -a *startpanelno*-*endpanelno* -t *thumbnail path" -d *date*" (date is year-mo-da, and it's optional), it will add an entry.  It's currently hard-coded to my scheme of ir####.png as the panel file name.
