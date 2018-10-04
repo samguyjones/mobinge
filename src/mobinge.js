@@ -13,6 +13,7 @@ export default class Mobinge extends React.Component {
       width: width,
       height: width/ratio,
       startPanel: startPanel ? startPanel - 1 : false,
+      panelRes: props.panelRes,
       manifest: props.manifest
     };
   }
@@ -50,7 +51,8 @@ export default class Mobinge extends React.Component {
           <PanelSet width={this.state.width} height={this.state.height}
               arrowWidth={(count >= this.props.arrowThreshold) ?
                 count : false} startPanel={this.state.startPanel}
-                manifest={this.state.manifest}/>
+                manifest={this.state.manifest}
+                panelRes={this.state.panelRes}/>
         </div>
       </MediaQuery>);
     }

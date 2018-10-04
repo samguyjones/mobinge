@@ -15,7 +15,8 @@ export default class PanelSet extends React.Component
     this.state = {
       panels: [<b key="placeHolder">Waiting</b>],
       width: props.width,
-      height: props.height
+      height: props.height,
+      panelRes: props.panelRes
     };
     this.mover = new PanelMover(this.librarian, props.startPanel, this.state.width);
   }
@@ -32,7 +33,7 @@ export default class PanelSet extends React.Component
       MsUserSelect: 'none',
       WebkitTouchCallout: 'none'
     };
-    this.librarian.fetchPanels(this.state.width + 'px')
+    this.librarian.fetchPanels(this.state.panelRes + 'px')
         .then(panelUrls => {
           this.setState({
             panels: panelUrls.map(panel => {
