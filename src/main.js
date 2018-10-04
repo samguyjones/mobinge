@@ -55,3 +55,9 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('root')
   );
 });
+
+window.oncontextmenu = function(event) {
+     event.preventDefault();
+     event.stopPropagation();
+     return false;
+};
