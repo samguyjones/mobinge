@@ -22,6 +22,10 @@ export default class PanelSet extends React.Component
   }
 
   componentDidMount() {
+    this.loadPanels();
+  }
+
+  loadPanels() {
     const panelStyle = {
       width: this.state.width + 'px',
       height: this.state.height + 'px',
@@ -35,6 +39,7 @@ export default class PanelSet extends React.Component
     };
     this.librarian.fetchPanels(this.state.panelRes + 'px')
         .then(panelUrls => {
+          console.log("Loading Panels", this.state.width, this.state.height);
           this.setState({
             panels: panelUrls.map(panel => {
               const key = 'panel-' + panel.sequence;
@@ -48,6 +53,14 @@ export default class PanelSet extends React.Component
             this.mover.loadPanels();
           }
         });
+  }
+
+  resize(width, height) {
+    this.setState({
+      width: width,
+      height: height
+    });
+    this.loadPanels();
   }
 
   getArrows() {

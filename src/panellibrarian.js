@@ -14,6 +14,7 @@ export default class PanelLibrarian {
         .endAt((end === undefined) ? PANLIB_DEFAULT_END : end)
         .panels = null;
     this[_images] = false;
+    this.panelData = null;
   }
 
   startAt(start) {
@@ -109,6 +110,11 @@ export default class PanelLibrarian {
         'message': 'No manifest is set.'
       };
     }
+    if (this.panelData !== null) {
+      return new Promise(() => {
+        return this.panelData;
+      });
+    }
     return this.getPanelData.then((response) => {
       return response.json();
     });
@@ -130,11 +136,6 @@ export default class PanelLibrarian {
   }
 
   fetchData(finder) {
-    if (this.panels !== null) {
-      return new Promise(() => {
-        return finder();
-      });
-    }
     return this.fetchManifestJson()
     .then(panelData => {
       this.panelData = panelData;

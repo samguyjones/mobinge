@@ -84,7 +84,7 @@ readSource(options.src)
     for (let count = parseInt(first); count <= parseInt(last); count++) {
       files.push({
         file: {
-          "320px": "/ir" + zeroFill(4, count) + "-320.png"
+          "640px": "/ir" + zeroFill(4, count) + "-640.png"
         },
         "sequence": count
       });

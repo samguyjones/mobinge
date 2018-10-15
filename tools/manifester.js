@@ -98,7 +98,7 @@ readSource(options.src).then(function (obj) {
     for (var count = parseInt(first); count <= parseInt(last); count++) {
       files.push({
         file: {
-          "320px": "/ir" + (0, _zeroFill2.default)(4, count) + "-320.png"
+          "640px": "/ir" + (0, _zeroFill2.default)(4, count) + "-640.png"
         },
         "sequence": count
       });

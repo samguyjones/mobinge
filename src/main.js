@@ -56,8 +56,8 @@ window.addEventListener('DOMContentLoaded', () => {
   );
 });
 
-window.oncontextmenu = function(event) {
-     event.preventDefault();
-     event.stopPropagation();
-     return false;
-};
+// window.oncontextmenu = function(event) {
+//      event.preventDefault();
+//      event.stopPropagation();
+//      return false;
+// };
