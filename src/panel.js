@@ -16,6 +16,16 @@ export default class Panel extends React.Component
     });
   }
 
+  resize(width, height) {
+    this.setState({
+      style: {
+        ...this.state.style,
+        width: width,
+        height: height
+      }
+    });
+  }
+
   render() {
     const DONT_DRAG_ME = e => e.preventDefault();
     if (this.state.loaded) {

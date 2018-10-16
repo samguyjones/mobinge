@@ -11,6 +11,17 @@ export default class PanelMover {
     this.dragComponent=null;
   }
 
+  resizeAll(width, height) {
+    if (width == this.width) {
+      return;
+    }
+    this.width = width;
+    this.panelRefs.forEach(function(myPanel) {
+      myPanel.resize(width, height);
+    });
+    this.snapTo(0);
+  }
+
   addPanel(panel) {
     this.panelRefs.push(panel);
   }
@@ -86,7 +97,7 @@ export default class PanelMover {
     if (!locking) {
       this.dragComponent.clearMovement();
     }
-    this.snapTo(destinationLeft, true);
+    this.snapTo(destinationLeft);
   }
 
   snapTo(destX)
@@ -94,7 +105,6 @@ export default class PanelMover {
     this.dragComponent.snapTo(destX);
     this.loadFromPoint(destX);
   }
-
 
   getDragXIfChanged(posX) {
     const dragX = this.dragComponent.state.x;

@@ -8,36 +8,29 @@ import {
   Link
 } from 'react-router-dom'
 
+const headerStyle={
+  height: '60px',
+  width: '100%',
+  backgroundColor: 'black'
+}
+
 const Reader = ({match}) => {
-  const headerStyle={
-    width: '320px',
-    height: '60px',
-    backgroundColor: 'black'
-  };
   const panelNo = (match.params.panelNo) ? match.params.panelNo : 0;
-  return <div>
-      <div id="header" style={headerStyle}>
-      <Link to='/index'>
-          <img src="/images/entry-list.png"/>
-      </Link>
+  return  <div id="header" style={headerStyle}>
+      <img src="/images/entry-list.png"/>
       <img src="/images/title.png"/>
-      </div>
       <Mobinge width="320" maxPanel="4" arrowThreshold="2" startPanel={panelNo}
-      manifest="manifest.json" panelRes="640"/>
+      manifest="manifest.json"/>
     </div>;
 }
 
 const Index = () => {
-  const headerStyle={
-    width: '384px',
-    height: '60px',
-    backgroundColor: 'black'
-  };
   return <div>
-  <div id="header" style={headerStyle}>
-  <img src="/images/entry-list-disabled.png"/>
-  <img src="/images/title.png"/>
-  </div>      <EntrySet/>
+    <div id="header" style="header">
+      <img src="/images/entry-list-disabled.png"/>
+      <img src="/images/title.png"/>
+    </div>
+    <EntrySet/>
   </div>;
 }
 
@@ -55,9 +48,3 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('root')
   );
 });
-
-// window.oncontextmenu = function(event) {
-//      event.preventDefault();
-//      event.stopPropagation();
-//      return false;
-// };
