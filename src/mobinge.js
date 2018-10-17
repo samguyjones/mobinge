@@ -39,8 +39,8 @@ export default class Mobinge extends React.Component {
   }
 
   getPanelWidth(panelCount) {
-    return (panelCount==this.props.maxPanel) ? this.state.width :
-        Math.round((this.state.browserSize - this.state.padding) / panelCount);
+    return Math.min(this.state.width * 2, Math.round(
+      (this.state.browserSize - this.state.padding) / panelCount));
   }
 
   getPanelHeight(panelWidth) {
@@ -49,13 +49,12 @@ export default class Mobinge extends React.Component {
 
   getDimensions() {
     const panelCount = this.getPanelCount();
-    console.log("PanelCount", this.state.browserSize, this.state.width, panelCount);
     const panelWidth = this.getPanelWidth(panelCount);
     const panelHeight = this.getPanelHeight(panelWidth);
     return {
       count: panelCount,
       width: panelWidth,
-      height: panelHeight,      
+      height: panelHeight,
     };
   }
 
@@ -80,7 +79,10 @@ export default class Mobinge extends React.Component {
   }
 
   render() {
-    return <div key="strip">
+    const myStyle={
+      backgroundColor: 'black'
+    };
+    return <div key="strip" style={myStyle}>
       {this.getPanelFrame()}
     </div>;
   }

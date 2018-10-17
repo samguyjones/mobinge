@@ -20,7 +20,7 @@ const Reader = ({match}) => {
       <img src="/images/entry-list.png"/>
       <img src="/images/title.png"/>
       <Mobinge width="320" maxPanel="4" arrowThreshold="2" startPanel={panelNo}
-      manifest="manifest.json"/>
+      manifest="manifest.json" panelRes="640"/>
     </div>;
 }
 
