@@ -79,10 +79,7 @@ export default class Mobinge extends React.Component {
   }
 
   render() {
-    const myStyle={
-      backgroundColor: 'black'
-    };
-    return <div key="strip" style={myStyle}>
+    return <div key="strip">
       {this.getPanelFrame()}
     </div>;
   }

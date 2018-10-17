@@ -8,16 +8,12 @@ import {
   Link
 } from 'react-router-dom'
 
-const headerStyle={
-  height: '60px',
-  width: '100%',
-  backgroundColor: 'black'
-}
-
 const Reader = ({match}) => {
   const panelNo = (match.params.panelNo) ? match.params.panelNo : 0;
-  return  <div id="header" style={headerStyle}>
-      <img src="/images/entry-list.png"/>
+  return  <div id="header">
+      <Link to='/index'>
+          <img src="/images/entry-list.png"/>
+      </Link>
       <img src="/images/title.png"/>
       <Mobinge width="320" maxPanel="4" arrowThreshold="2" startPanel={panelNo}
       manifest="manifest.json" panelRes="640"/>
@@ -25,19 +21,22 @@ const Reader = ({match}) => {
 }
 
 const Index = () => {
-  return <div>
-    <div id="header" style="header">
+  return <div id="header">
       <img src="/images/entry-list-disabled.png"/>
       <img src="/images/title.png"/>
-    </div>
     <EntrySet/>
-  </div>;
+    </div>;
 }
 
 
 window.addEventListener('DOMContentLoaded', () => {
+  const headerStyle={
+    width: '100%',
+    backgroundColor: 'black'
+  }
+
   const mobinge = <Router>
-    <div>
+    <div style={headerStyle}>
       <Route path="/panel/:panelNo" component={Reader}/>
       <Route path="/index" component={Index}/>
       <Route exact path="/" component={Reader}/>
