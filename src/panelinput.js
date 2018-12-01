@@ -14,7 +14,7 @@ export default class PanelInput {
   }
 
   left(myLeft) {
-    if (myLeft) {
+    if (myLeft !== undefined) {
       this.leftOffset = myLeft;
       return this;
     }
@@ -22,7 +22,7 @@ export default class PanelInput {
   }
 
   right(myRight) {
-    if (myRight) {
+    if (myRight !== undefined) {
       this.rightOffset = myRight;
       return this;
     }
