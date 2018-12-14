@@ -16,10 +16,11 @@ Comics."
 ## How to Set Up
 
 1. Clone this repo to a directory.
-2. Set up your images and manifest (see "manifest.json" below).
-3. Run "yarn run build".  This will make a bundle.js in the lib directory.
-4. Set up an index.html that loads this bundle.js (see "index page" further below").
-5. Put the index, bundle.js, manifest and images somewhere a web server can serve them.
+2. Run "yarn install" to set up the libraries.
+4. Run "yarn run build".  This will make a bundle.js in the lib directory.
+3. Set up your images and manifest (see "manifest.json" below).
+5. Set up an index.html that loads this bundle.js (see "index page" further below").
+6. Put the index, bundle.js, manifest and images somewhere a web server can serve them.
 
 ## Manifest.json
 
