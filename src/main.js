@@ -7,14 +7,12 @@ import {
   Route,
   Link
 } from 'react-router-dom'
-// <Link to='/index'>
-//     <img src="/images/entry-list.png"/>
-// </Link>
-// <img src="/images/title.png"/>
+import 'whatwg-fetch';
+import config from 'react-global-configuration';
+
 const Reader = ({match}) => {
   const panelNo = (match.params.panelNo) ? match.params.panelNo : 0;
-  return  <Mobinge width="320" maxPanel="4" arrowThreshold="2" startPanel={panelNo}
-      manifest="manifest.json" panelRes="640"/>;
+  return  <Mobinge startPanel={panelNo}/>;
 }
 
 const Index = () => {
@@ -23,15 +21,22 @@ const Index = () => {
 
 
 window.addEventListener('DOMContentLoaded', () => {
-  const mobinge = <Router>
-    <div>
-      <Route path="/panel/:panelNo" component={Reader}/>
-      <Route path="/index" component={Index}/>
-      <Route exact path="/" component={Reader}/>
-    </div>
-  </Router>;
-  ReactDOM.render(
-    mobinge,
-    document.getElementById('root')
-  );
+  const settingsFile = 'settings.json';
+  fetch(settingsFile).then((response) => {
+    return response.json();
+  })
+  .then((settings) => {
+    config.set(settings);
+    const mobinge = <Router>
+      <div>
+        <Route path="/panel/:panelNo" component={Reader}/>
+        <Route path="/index" component={Index}/>
+        <Route exact path="/" component={Reader}/>
+      </div>
+    </Router>;
+    ReactDOM.render(
+      mobinge,
+      document.getElementById('root')
+    );
+  });
 });

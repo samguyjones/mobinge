@@ -1,5 +1,6 @@
 import React from 'react';
 import PanelSet from './panelset';
+import config from 'react-global-configuration';
 
 export default class Mobinge extends React.Component {
   constructor(props) {
@@ -11,12 +12,9 @@ export default class Mobinge extends React.Component {
       this.resize();
     });
     this.state = {
-      width: width,
-      ratio: 1.5,
-      padding: 20,
       startPanel: startPanel ? startPanel - 1 : false,
-      panelRes: props.panelRes,
-      manifest: props.manifest,
+      panelRes: config.get('panelResolution'),
+      manifest: config.get('manifest'),
       browserSize: window.innerWidth
     };
   }
@@ -29,22 +27,18 @@ export default class Mobinge extends React.Component {
     this.panelSet.resize(panelStats.width, panelStats.height);
   }
 
-  getOffset() {
-    return (this.state.offset * this.state.width);
-  }
-
   getPanelCount() {
-    return Math.min(this.props.maxPanel, Math.floor(
-      (this.state.browserSize - this.state.padding) / this.state.width));
+    return Math.min(config.get('maxPanel'), Math.floor(
+      (this.state.browserSize - config.get('padding')) / config.get('panelWidth')));
   }
 
   getPanelWidth(panelCount) {
-    return Math.min(this.state.width * 2, Math.round(
-      (this.state.browserSize - this.state.padding) / panelCount));
+    return Math.min(config.get('panelWidth') * 2, Math.round(
+      (this.state.browserSize - config.get('padding')) / panelCount));
   }
 
   getPanelHeight(panelWidth) {
-    return Math.round(panelWidth * this.state.ratio);
+    return Math.round(panelWidth * config.get('ratio'));
   }
 
   getDimensions() {
@@ -63,10 +57,8 @@ export default class Mobinge extends React.Component {
     return(
       <div style={this.getStyle(panelStats.width, panelStats.count)}>
         <PanelSet width={panelStats.width} height={panelStats.height}
-            arrowWidth={(panelStats.count >= this.props.arrowThreshold) ?
+            arrowWidth={(panelStats.count >= config.get('arrowThreshold')) ?
               panelStats.count : false} startPanel={this.state.startPanel}
-              manifest={this.state.manifest}
-              panelRes={this.state.panelRes}
               ref={input => this.panelSet = input}/>
       </div>);
   }

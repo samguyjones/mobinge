@@ -5,18 +5,18 @@ import SnapDraggable from './snapdraggable.js';
 import Arrows from './arrows.js';
 import Panel from './panel.js';
 import PanelMover from './panelmover.js';
+import config from 'react-global-configuration';
 
 export default class PanelSet extends React.Component
 {
   constructor(props) {
     super(props);
-    this.librarian = new PanelLibrarian(props.manifest);
+    this.librarian = new PanelLibrarian(config.get('manifest'));
     this.currentPanel = props.startPanel;
     this.state = {
       panels: [<b key="placeHolder">Waiting</b>],
       width: props.width,
-      height: props.height,
-      panelRes: props.panelRes
+      height: props.height
     };
     this.mover = new PanelMover(this.librarian, props.startPanel, this.state.width);
   }
@@ -26,14 +26,9 @@ export default class PanelSet extends React.Component
       width: this.state.width + 'px',
       height: this.state.height + 'px',
       display: 'inline-block',
-      MozUserSelect: 'none',
-      WebkitUserSelect: 'none',
-      userSelect: 'none',
-      pointerEvent: 'none',
-      MsUserSelect: 'none',
-      WebkitTouchCallout: 'none'
+      paddingRight: config.get('dividerWidth') + 'px'
     };
-    this.librarian.fetchPanels(this.state.panelRes + 'px')
+    this.librarian.fetchPanels(config.get('panelResolution') + 'px')
         .then(panelUrls => {
           this.setState({
             panels: panelUrls.map(panel => {
@@ -74,12 +69,12 @@ export default class PanelSet extends React.Component
   render() {
     const panelSetStyle = {
       height: this.state.height,
-      width: (this.state.panels.length * this.state.width) + 'px',
+      width: (this.state.panels.length * (this.state.width + config.get('dividerWidth'))) + 'px',
       position: 'relative',
       left: '0px'
     };
     const boundStats = {
-      left: -(this.state.width * (this.state.panels.length -1)),
+      left: -((this.state.width + config.get('dividerWidth')) * (this.state.panels.length -1)),
       top: 0,
       bottom: 0,
       right: 0
