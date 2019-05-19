@@ -1,9 +1,9 @@
 import React from 'react';
-import PanelLibrarian from './panellibrarian';
+import PanelLibrarian from '../../PanelLibrarian';
 import PanelInput from './panelinput.js';
-import SnapDraggable from './snapdraggable.js';
-import Arrows from './arrows.js';
-import Panel from './panel.js';
+import SnapDraggable from '../SnapDraggable';
+import Arrows from '../Arrows';
+import Panel from '../Panel';
 import PanelMover from './panelmover.js';
 import config from 'react-global-configuration';
 

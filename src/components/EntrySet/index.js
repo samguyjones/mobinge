@@ -1,6 +1,6 @@
 import React from 'react';
-import PanelLibrarian from './panellibrarian';
-import Entry from './entry';
+import PanelLibrarian from '../../PanelLibrarian';
+import Entry from '../Entry';
 export default class EntrySet extends React.Component
 {
   constructor(props) {

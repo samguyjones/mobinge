@@ -1,5 +1,5 @@
 import React from 'react';
-import SnapDraggable from '../src/snapdraggable.js';
+import SnapDraggable from '../src/components/SnapDraggable';
 import renderer from 'react-test-renderer';
 
 describe('Tests With Rendered Component', () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import Arrows from '../src/arrows.js';
+import Arrows from '../src/components/Arrows';
 import renderer from 'react-test-renderer';
 
 test('Test Render', () => {

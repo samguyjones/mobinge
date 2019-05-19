@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
-import Mobinge from './mobinge';
-import EntrySet from './entryset';
+import Mobinge from './components/Mobinge';
+import EntrySet from './components/EntrySet';
 import {
   HashRouter as Router,
   Route,

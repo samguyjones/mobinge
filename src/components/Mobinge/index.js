@@ -1,5 +1,5 @@
 import React from 'react';
-import PanelSet from './panelset';
+import PanelSet from '../PanelSet';
 import config from 'react-global-configuration';
 
 export default class Mobinge extends React.Component {

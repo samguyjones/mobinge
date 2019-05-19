@@ -61,8 +61,7 @@ function writeSource(contents, out) {
 
 function currentDate() {
   let now = new Date();
-  return (now.getYear() + 1900) + "-" + zeroFill(2,now.getMonth() + 1) + "-"
-      + zeroFill(2,now.getDate());
+
 }
 
 function getEntry(options, files)

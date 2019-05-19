@@ -1,5 +1,5 @@
 import React from 'react';
-import PanelLibrarian from '../src/panellibrarian.js';
+import PanelLibrarian from '../src/PanelLibrarian';
 
 describe('Tests Using Mock Manifest', () => {
   let librarian = new PanelLibrarian(false);

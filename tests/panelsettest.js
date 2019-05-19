@@ -1,8 +1,12 @@
 import React from 'react';
-import PanelSet from '../src/panelset.js';
+import PanelSet from '../src/components/PanelSet';
 import renderer from 'react-test-renderer';
+import config from 'react-global-configuration';
 
 test('Test Construct', () => {
+  config.set({
+    manifest: null
+  });
   const mover = {
   };
 

@@ -1,4 +1,4 @@
-import PanelInput from '../src/panelinput.js'
+import PanelInput from '../src/components/PanelSet/panelinput.js'
 
 test('Grab', () => {
   const input = new PanelInput({width:320});

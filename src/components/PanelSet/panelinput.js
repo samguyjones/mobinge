@@ -56,7 +56,6 @@ export default class PanelInput {
   }
 
   grab(e, data) {
-    const delay=400;
     if (this.redundantEvent(e)) {
       return;
     }

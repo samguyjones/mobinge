@@ -1,0 +1,10 @@
+{
+    "panelWidth": 320,
+    "ratio": 1.5,
+    "padding": 20,
+    "panelResolution": 640,
+    "dividerWidth": 0,
+    "arrowThreshold": 2,
+    "manifest": "manifest.json",
+    "maxPanel": 4
+}

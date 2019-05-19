@@ -1,5 +1,5 @@
 import React from 'react';
-import Panel from '../src/panel.js';
+import Panel from '../src/components/Panel';
 import renderer from 'react-test-renderer';
 
 test('Test Render', () => {

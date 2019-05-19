@@ -1,0 +1,5 @@
+.bitmap
+.vscode*
+dist/*
+lib/*
+tools/*

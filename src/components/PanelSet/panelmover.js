@@ -1,13 +1,13 @@
 import React from 'react';
-import PanelLibrarian from './panellibrarian';
-import Panel from './panel.js';
+import PanelLibrarian from '../../PanelLibrarian';
+import Panel from '../Panel';
 import config from 'react-global-configuration';
 
 export default class PanelMover {
   constructor(librarian, currentPanel, width) {
     this.librarian = librarian;
     this.currentPanel = currentPanel;
-    this.width = width + config.get('dividerWidth');
+    this.width = width + this.getDividerWidth();
     this.panelRefs = [];
     this.dragComponent=null;
   }
@@ -16,11 +16,15 @@ export default class PanelMover {
     if (width == this.width) {
       return;
     }
-    this.width = width + config.get('dividerWidth');
+    this.width = width + this.getDividerWidth();
     this.panelRefs.forEach(function(myPanel) {
       myPanel.resize(width, height);
     });
     this.snapTo(0);
+  }
+
+  getDividerWidth() {
+    return config.get('dividerWidth');
   }
 
   addPanel(panel) {
